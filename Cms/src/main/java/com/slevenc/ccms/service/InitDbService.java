@@ -47,6 +47,8 @@ public class InitDbService {
         se.close();
     }
 
+
+
     @Resource
     public void setSf(SessionFactory sf) {
         this.sf = sf;

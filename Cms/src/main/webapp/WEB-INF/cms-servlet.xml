@@ -21,6 +21,7 @@
     <!-- Enables the Spring MVC @Controller programming model -->
     <mvc:resources mapping="/res/**" location="/res/"/>
     <mvc:annotation-driven/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <!--
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
@@ -94,19 +95,19 @@
             <ref local="sf"/>
         </property>
     </bean>
-    <aop:config>
-        <!-- 切入点指明了在执行Service的所有方法时产生事务拦截操作 -->
-        <aop:pointcut id="daoMethods"
-                      expression="execution(* com.slevenc.levencs.user.service..*(..))"/>
-        <!-- 定义了将采用何种拦截操作，这里引用到 txAdvice -->
-        <aop:advisor advice-ref="txAd" pointcut-ref="daoMethods"/>
-    </aop:config>
-    <tx:advice id="txAd" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="delete*" rollback-for="Exception"/>
-            <tx:method name="save*" rollback-for="Exception"/>
-            <tx:method name="update*" rollback-for="Exception"/>
-            <tx:method name="*" read-only="true" rollback-for="Exception"/>
-        </tx:attributes>
-    </tx:advice>
+    <!--<aop:config>-->
+        <!--&lt;!&ndash; 切入点指明了在执行Service的所有方法时产生事务拦截操作 &ndash;&gt;-->
+        <!--<aop:pointcut id="daoMethods"-->
+                      <!--expression="execution(* com.slevenc.ccms.service.*.*(..))"/>-->
+        <!--&lt;!&ndash; 定义了将采用何种拦截操作，这里引用到 txAdvice &ndash;&gt;-->
+        <!--<aop:advisor advice-ref="txAd" pointcut-ref="daoMethods"/>-->
+    <!--</aop:config>-->
+    <!--<tx:advice id="txAd" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>-->
+            <!--<tx:method name="save*" rollback-for="Exception"/>-->
+            <!--<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>-->
+            <!--<tx:method name="*" read-only="true" rollback-for="Exception"/>-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
 </beans>
