@@ -39,6 +39,16 @@
     </bean>
 
     -->
+
+
+    <bean id="entityClassFinder" class="com.slevenc.ccms.util.factory.ClassFinderFactory">
+        <property name="annotationClass">
+            <value>javax.persistence.Entity</value>
+        </property>
+        <property name="packageToScan">
+            <value>com.slevenc.ccms.entity</value>
+        </property>
+    </bean>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
     </bean>
@@ -74,13 +84,9 @@
 
     <bean id="sf" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="configLocation" value="classpath:userDb.h.cfg.xml"/>
-        <!--<property name="annotatedClasses">-->
-            <!--<list>-->
-                <!--<value>com.slevenc.ccms.entity.*</value>-->
-            <!--</list>-->
-        <!--</property>-->
+        <property name="annotatedClasses" ref="entityClassFinder">
+        </property>
     </bean>
-
 
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
