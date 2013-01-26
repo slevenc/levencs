@@ -1,4 +1,4 @@
-package com.slevenc.ccms.entity.user;
+package com.slevenc.ccms.entity.system;
 
 
 import javax.persistence.Column;

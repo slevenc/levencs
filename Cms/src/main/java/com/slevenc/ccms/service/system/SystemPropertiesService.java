@@ -1,12 +1,11 @@
 package com.slevenc.ccms.service.system;
 
-import com.slevenc.ccms.entity.user.SystemPropertyEntity;
+import com.slevenc.ccms.entity.system.SystemPropertyEntity;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;

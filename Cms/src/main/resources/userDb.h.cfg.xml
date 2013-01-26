@@ -18,7 +18,7 @@
         <property name="jdbc.fetch_size">50</property>
         <property name="jdbc.batch_size">30</property>
 
-        <mapping class="com.slevenc.ccms.entity.user.SystemPropertyEntity"/>
+        <mapping class="com.slevenc.ccms.entity.system.SystemPropertyEntity"/>
         <mapping class="com.slevenc.ccms.entity.user.UserEntity"/>
     </session-factory>
 

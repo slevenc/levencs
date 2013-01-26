@@ -1,5 +1,7 @@
-package com.slevenc.ccms.service;
+package com.slevenc.ccms.service.system;
 
+import com.slevenc.ccms.entity.article.Template;
+import com.slevenc.ccms.entity.system.SystemPropertyEntity;
 import com.slevenc.ccms.logger.LoggerUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,7 +22,7 @@ import java.sql.SQLException;
  * Date: 13-1-19
  * Time: 下午12:13
  */
-@Service(value="initDbService")
+@Service(value = "initDbService")
 public class InitDbService {
 
     private SessionFactory sf = null;
@@ -41,12 +43,38 @@ public class InitDbService {
                     SchemaExport se = new SchemaExport(factoryBean.getConfiguration(), connection);
                     se.create(true, true);
                     connection.commit();
+                    initData();
                 }
             }
         });
         se.close();
     }
 
+    public void initData() {
+        LoggerUtil.i.info("刷入初始化数据");
+        Session se = sf.openSession();
+
+        SystemPropertyEntity spe = new SystemPropertyEntity();
+        spe.setName("ARTICLE_DIR_PROPERTY");
+        spe.setValue("d:/html/articles/");
+        se.save(spe);
+
+        Template at = null;
+        Template o1 = (Template) se.get(Template.class, 1l);
+        if (o1 != null) {
+            at = o1;
+        } else {
+            at = new Template();
+        }
+        at.setPath("article/template/default.ftl");
+        se.save(at);
+        if(at.getId()!=1){
+            se.createSQLQuery("update t_template set id=1 where id="+at.getId()).executeUpdate();
+        }
+
+        se.beginTransaction().commit();
+        se.close();
+    }
 
 
     @Resource

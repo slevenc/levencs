@@ -1,6 +1,6 @@
 package com.slevenc.ccms.listener;
 
-import com.slevenc.ccms.service.InitDbService;
+import com.slevenc.ccms.service.system.InitDbService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 

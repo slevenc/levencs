@@ -14,4 +14,9 @@ public class LoggerUtil {
     public void info(String msg) {
         System.out.println(msg);
     }
+
+    public void info(String msg, Throwable th) {
+        System.out.println(msg);
+        th.printStackTrace();
+    }
 }
