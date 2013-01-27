@@ -58,13 +58,18 @@ public class ServletDispatcher extends HttpServlet {
         }
     }
 
-
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String act = req.getParameter("act");
         HttpServletExecutor executor = executors.get(act);
         if (executor != null) {
-            executor.execute(req, resp);
+            try {
+                executor.execute(req, resp);
+                //执行完成自动完成事务
+            } catch (RuntimeException re) {
+                //异常时回滚
+                throw re;
+            }
         } else {
             resp.sendError(404);
         }

@@ -1,6 +1,5 @@
 package com.slevenc.spf.context.impl;
 
-import com.slevenc.spf.context.ApplicationContext;
 import com.slevenc.spf.scaner.ClassFinder;
 
 /**
@@ -10,12 +9,8 @@ import com.slevenc.spf.scaner.ClassFinder;
  * Time: 下午4:38
  * To change this template use File | Settings | File Templates.
  */
-public class ApplicationContextImpl{
+public class ApplicationContextImpl {
 
-
-    private ApplicationContextImpl() {
-
-    }
 
     private ClassFinder classFinder = null;
 

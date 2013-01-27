@@ -13,6 +13,5 @@ import com.slevenc.spf.context.impl.ApplicationContextImpl;
 public class ApplicationContextFactoryModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(ApplicationContextImpl.class);
     }
 }

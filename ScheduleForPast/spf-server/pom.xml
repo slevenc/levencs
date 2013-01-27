@@ -17,7 +17,7 @@
         <module>scaner</module>
         <module>timeline</module>
         <module>context</module>
-        <module>hibernatedb</module>
+        <module>db-mongoDb</module>
     </modules>
 
 
