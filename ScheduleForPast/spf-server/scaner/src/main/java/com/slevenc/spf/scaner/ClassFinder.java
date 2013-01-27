@@ -54,8 +54,18 @@ public class ClassFinder {
 
     private List<Class> allSpiderClass = new ArrayList<Class>();
 
-    public ClassFinder() {
+    public ClassFinder(String[] packageList) {
+        this.packageList = packageList;
+        try {
+            if (packageList != null) {
+                for (String p : packageList) {
+                    classLoader(p);
 
+                }
+            }
+        } catch (Exception ex) {
+            logger.info("类列表构造失败", ex);
+        }
     }
 
     private void classLoader(String p) throws Exception {
@@ -161,17 +171,4 @@ public class ClassFinder {
         return packageList;
     }
 
-    public void setPackageList(String[] packageList) {
-        this.packageList = packageList;
-        try {
-            if (packageList != null) {
-                for (String p : packageList) {
-                    classLoader(p);
-
-                }
-            }
-        } catch (Exception ex) {
-            logger.info("类列表构造失败", ex);
-        }
-    }
 }

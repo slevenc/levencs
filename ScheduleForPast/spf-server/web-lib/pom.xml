@@ -14,11 +14,11 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>com.slevenc.spf</groupId>
-            <artifactId>scaner</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+       <dependency>
+           <groupId>com.slevenc.spf</groupId>
+           <artifactId>context</artifactId>
+           <version>1.0-SNAPSHOT</version>
+       </dependency>
 
         <dependency>
             <groupId>net.sf.json-lib</groupId>
