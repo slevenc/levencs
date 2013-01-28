@@ -16,5 +16,11 @@ public interface LoginEntityDao {
 
     public User getUserByUserName(String username);
 
+    public String getPasswordByUserId(String userId);
+
     public void changeUserPassword(String userId,String Password);
+
+    public void inserUser(User user);
+
+    public void insertLoginEntity(String userId,String username,String password);
 }
