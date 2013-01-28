@@ -33,6 +33,8 @@ public class ApplicationContextFactory {
     private String[] packageToScan = new String[0];
     private Injector injector = null;
 
+
+
     private ApplicationContextFactory() {
         logger = LoggerFactory.getLogger(ApplicationContextFactory.class);
         try {
@@ -41,7 +43,6 @@ public class ApplicationContextFactory {
         } catch (Exception ex) {
             logger.info("载入配置失败", ex);
         }
-        injector = Guice.createInjector(scanModules());
     }
 
 
@@ -106,7 +107,7 @@ public class ApplicationContextFactory {
     }
 
     public static ApplicationContextImpl getApplicationContext() {
-        return instance.injector.getInstance(ApplicationContextImpl.class);
+        return getInjector().getInstance(ApplicationContextImpl.class);
     }
 
     public static ClassFinder getClassFinder() {
@@ -114,6 +115,9 @@ public class ApplicationContextFactory {
     }
 
     public static Injector getInjector() {
+        if(instance.injector==null){
+            instance.injector = Guice.createInjector(instance.scanModules());
+        }
         return instance.injector;
     }
 

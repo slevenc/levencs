@@ -80,8 +80,13 @@ public class TestMongoTemplate {
         UserDao userDao = ApplicationContext.loadClass(UserDao.class);
         userDao.insertLoginEntity(userId,le.getUsername(),le.getPassword());
         userDao.insertUser(user);
+    }
 
 
+    @Test
+    public void testFindUser() throws Exception {
+        UserDao ud = ApplicationContext.loadClass(UserDao.class);
+        logger.info("user:"+ud.getUserByUserName("admin"));
 
     }
 }

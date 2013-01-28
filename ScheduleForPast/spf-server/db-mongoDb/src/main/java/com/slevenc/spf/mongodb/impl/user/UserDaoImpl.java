@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ import java.util.List;
  * Date: 13-1-28
  * Time: 下午9:32
  */
+@Resource(type = UserDao.class)
 public class UserDaoImpl implements UserDao {
 
     private MongoTemplate mt = null;
@@ -44,10 +46,20 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserByUserName(String username) {
         User result = null;
-        List<User> userList = mt.find(new Query().addCriteria(Criteria.where("username").is(username)).limit(1), User.class);
-        if (userList.isEmpty() == false) {
-            result = userList.get(0);
+        String userId = "";
+
+        List<LoginEntity> loginList = mt.find(new Query().addCriteria(Criteria.where("username").is(username))
+                , LoginEntity.class);
+        if (loginList.isEmpty() == false) {
+            userId = loginList.get(0).getUserid();
+
+
+            List<User> userList = mt.find(new Query().addCriteria(Criteria.where("userId").is(userId)).limit(1), User.class);
+            if (userList.isEmpty() == false) {
+                result = userList.get(0);
+            }
         }
+
         return result;
     }
 
