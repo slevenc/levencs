@@ -1,7 +1,10 @@
 package com.slevnec.spf.mongodb.test;
 
 import com.mongodb.Mongo;
+import com.slevenc.spf.context.ApplicationContext;
+import com.slevenc.spf.user.dao.UserDao;
 import com.slevenc.spf.user.entity.LoginEntity;
+import com.slevenc.spf.user.entity.User;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +58,29 @@ public class TestMongoTemplate {
                logger.info("username:"+le.getUsername());
                logger.info("password:"+le.getPassword());
         }
+    }
+
+
+    @Test
+    public void testAddUser() throws Exception {
+
+        String userId = UUID.randomUUID().toString();
+
+        User user = new User();
+        user.setUserId(userId);
+        user.setNickname("admin");
+        user.setUserEmail("admin@admin.com");
+
+
+        LoginEntity le = new LoginEntity();
+        le.setUserid(userId);
+        le.setUsername("admin");
+        le.setPassword("admin");
+
+        UserDao userDao = ApplicationContext.loadClass(UserDao.class);
+        userDao.insertLoginEntity(userId,le.getUsername(),le.getPassword());
+        userDao.insertUser(user);
+
 
 
     }

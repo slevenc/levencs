@@ -69,7 +69,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void inserUser(User user) {
+    public void insertUser(User user) {
         mt.save(user);
     }
 

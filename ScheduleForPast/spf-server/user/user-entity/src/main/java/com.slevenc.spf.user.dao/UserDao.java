@@ -20,7 +20,7 @@ public interface UserDao {
 
     public void changeUserPassword(String userId,String Password);
 
-    public void inserUser(User user);
+    public void insertUser(User user);
 
     public void insertLoginEntity(String userId,String username,String password);
 }
