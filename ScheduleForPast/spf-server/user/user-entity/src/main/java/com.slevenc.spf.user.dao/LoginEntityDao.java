@@ -1,5 +1,7 @@
 package com.slevenc.spf.user.dao;
 
+import com.slevenc.spf.user.entity.User;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Slevenc
@@ -8,5 +10,11 @@ package com.slevenc.spf.user.dao;
  */
 public interface LoginEntityDao {
 
-    public Long getUserIdByUsernameAndPassword(String username, String password);
+    public String getUserIdByUsernameAndPassword(String username, String password);
+
+    public User getUserByUserId(String userId);
+
+    public User getUserByUserName(String username);
+
+    public void changeUserPassword(String userId,String Password);
 }
