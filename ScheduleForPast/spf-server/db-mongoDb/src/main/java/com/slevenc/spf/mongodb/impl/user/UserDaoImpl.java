@@ -1,7 +1,7 @@
 package com.slevenc.spf.mongodb.impl.user;
 
 import com.google.inject.Inject;
-import com.slevenc.spf.user.dao.LoginEntityDao;
+import com.slevenc.spf.user.dao.UserDao;
 import com.slevenc.spf.user.entity.LoginEntity;
 import com.slevenc.spf.user.entity.User;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -16,7 +16,7 @@ import java.util.List;
  * Date: 13-1-28
  * Time: 下午9:32
  */
-public class LoginEntityDaoImpl implements LoginEntityDao {
+public class UserDaoImpl implements UserDao {
 
     private MongoTemplate mt = null;
 

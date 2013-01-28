@@ -8,7 +8,7 @@ import com.slevenc.spf.user.entity.User;
  * Date: 13-1-27
  * Time: 下午9:49
  */
-public interface LoginEntityDao {
+public interface UserDao {
 
     public String getUserIdByUsernameAndPassword(String username, String password);
 
