@@ -1,5 +1,6 @@
 package com.slevenc.spf.context.impl;
 
+import com.google.inject.Injector;
 import com.slevenc.spf.scaner.ClassFinder;
 
 /**
@@ -24,4 +25,6 @@ public class ApplicationContextImpl {
             this.classFinder = classFinder;
         }
     }
+
+
 }

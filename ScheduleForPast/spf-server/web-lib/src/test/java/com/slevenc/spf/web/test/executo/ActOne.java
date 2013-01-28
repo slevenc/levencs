@@ -2,6 +2,7 @@ package com.slevenc.spf.web.test.executo;
 
 import com.slevenc.spf.web.HttpServletExecutor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * Time: 下午1:06
  * To change this template use File | Settings | File Templates.
  */
+@Resource
 public class ActOne implements HttpServletExecutor {
     @Override
     public String getAct() {

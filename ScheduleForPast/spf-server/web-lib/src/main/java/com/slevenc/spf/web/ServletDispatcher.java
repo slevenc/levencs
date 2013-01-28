@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,17 +44,20 @@ public class ServletDispatcher extends HttpServlet {
         HttpServletExecutor exe = null;
         String act = null;
         for (Class c : ClassList) {
-            try {
-                exe = (HttpServletExecutor) c.newInstance();
-                act = exe.getAct();
-                if (executors.containsKey(act) == false) {
-                    executors.put(exe.getAct(), exe);
-                    logger.debug("load executor act:" + act + " class:" + c.getName());
-                } else {
-                    logger.warn("重复定义act :" + act + " class1:" + executors.get(act).getClass().getName() + " class2:" + c.getName());
+            if (Modifier.isAbstract(c.getModifiers()) == false && Modifier.isInterface(c.getModifiers()) == false) {
+                try {
+
+                    exe = (HttpServletExecutor) ApplicationContext.loadClass(c);
+                    act = exe.getAct();
+                    if (executors.containsKey(act) == false) {
+                        executors.put(exe.getAct(), exe);
+                        logger.debug("load executor act:" + act + " class:" + c.getName());
+                    } else {
+                        logger.warn("重复定义act :" + act + " class1:" + executors.get(act).getClass().getName() + " class2:" + c.getName());
+                    }
+                } catch (Exception ex) {
+                    logger.info("实例化Class失败：" + c.getName(), ex);
                 }
-            } catch (Exception ex) {
-                logger.info("实例化Class失败：" + c.getName(), ex);
             }
         }
     }

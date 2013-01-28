@@ -108,8 +108,13 @@ public class ApplicationContextFactory {
     public static ApplicationContextImpl getApplicationContext() {
         return instance.injector.getInstance(ApplicationContextImpl.class);
     }
-    public static ClassFinder getClassFinder(){
+
+    public static ClassFinder getClassFinder() {
         return instance.classFinder;
+    }
+
+    public static Injector getInjector() {
+        return instance.injector;
     }
 
 }

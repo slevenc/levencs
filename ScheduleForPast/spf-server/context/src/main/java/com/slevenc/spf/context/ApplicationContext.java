@@ -18,4 +18,11 @@ public abstract class ApplicationContext {
         return ApplicationContextFactory.getClassFinder();
     }
 
+    public static <T> T loadClass(Class<T> clazz){
+        return ApplicationContextFactory.getInjector().getInstance(clazz);
+    }
+
+
+
+
 }
