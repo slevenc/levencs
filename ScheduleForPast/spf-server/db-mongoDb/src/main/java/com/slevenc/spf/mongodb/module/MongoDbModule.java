@@ -21,7 +21,7 @@ public class MongoDbModule extends AbstractModule {
     @Override
     protected void configure() {
         logger.info("start load mongodb module");
-        bind(MongoTemplate.class).toProvider(MongoTemplateFactory.class);
+//        bind(MongoTemplate.class).toProvider(MongoTemplateFactory.class);
 //        bind(UserDao.class).to(UserDaoImpl.class);
     }
 }

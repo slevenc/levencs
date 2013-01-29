@@ -16,18 +16,23 @@ public class FlagException extends RuntimeException {
         this.flag = flag;
         this.msg = msg;
     }
-    public FlagException( String msg) {
+
+    public FlagException(String msg) {
         this.msg = msg;
     }
+
     public String getFlag() {
         return flag.toUpperCase();
     }
+
     public void setFlag(String flag) {
         this.flag = flag;
     }
+
     public String getMsg() {
         return msg;
     }
+
     public void setMsg(String msg) {
         this.msg = msg;
     }

@@ -14,7 +14,7 @@ public class HttpServletUtil {
         return uri.substring(uri.length() - req.getContextPath().length());
     }
 
-    public static String getRootPath(HttpServletRequest req){
+    public static String getRootPath(HttpServletRequest req) {
         String url = req.getRequestURL().toString();
         String uri = req.getRequestURI();
         return url.substring(0, url.length() - uri.length()) + req.getContextPath() + "/";

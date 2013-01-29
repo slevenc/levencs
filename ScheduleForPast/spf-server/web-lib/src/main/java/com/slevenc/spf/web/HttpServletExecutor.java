@@ -1,8 +1,6 @@
 package com.slevenc.spf.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.lang.reflect.Method;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,12 +11,10 @@ import java.io.IOException;
  */
 public interface HttpServletExecutor {
 
+    public Object execute(Method m)throws Exception;
 
-    //获取处理的act
-   public String getAct();
 
-    //执行方法法
-    public void execute(HttpServletRequest request, HttpServletResponse resp) throws IOException;
+
 
 
 }

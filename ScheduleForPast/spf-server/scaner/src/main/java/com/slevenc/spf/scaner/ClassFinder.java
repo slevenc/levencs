@@ -20,8 +20,8 @@ public class ClassFinder {
 
     private String[] packageList = new String[0];
 
-    public List<Class> findAnnotatedClasses(Class<? extends Annotation> anno) {
-        List<Class> result = new LinkedList<Class>();
+    public Set<Class> findAnnotatedClasses(Class<? extends Annotation> anno) {
+        Set<Class> result = new LinkedHashSet<Class>();
         for (Class clazz : allSpiderClass) {
             if (clazz.isAnnotationPresent(anno)) {
                 result.add(clazz);
@@ -30,8 +30,8 @@ public class ClassFinder {
         return result;
     }
 
-    public List<Class> findImplements(Class assignable) {
-        List<Class> result = new LinkedList<Class>();
+    public Set<Class> findImplements(Class assignable) {
+        Set<Class> result = new LinkedHashSet<Class>();
         for (Class clazz : allSpiderClass) {
             if (clazz.equals(assignable) == false && assignable.isAssignableFrom(clazz)) {
                 result.add(clazz);
@@ -40,8 +40,8 @@ public class ClassFinder {
         return result;
     }
 
-    public List<Method> findAnnotationedMethod(Class<? extends Annotation> anno) {
-        List<Method> result = new LinkedList<Method>();
+    public Set<Method> findAnnotationedMethod(Class<? extends Annotation> anno) {
+        Set<Method> result = new LinkedHashSet<Method>();
         for (Class clazz : allSpiderClass) {
             for (Method m : clazz.getMethods()) {
                 if (m.isAnnotationPresent(anno)) {
@@ -52,7 +52,7 @@ public class ClassFinder {
         return result;
     }
 
-    private List<Class> allSpiderClass = new ArrayList<Class>();
+    private Set<Class> allSpiderClass = new LinkedHashSet<Class>();
 
     public ClassFinder(String[] packageList) {
         this.packageList = packageList;

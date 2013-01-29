@@ -1,10 +1,12 @@
 package com.slevenc.spf.web.test.executo;
 
 import com.slevenc.spf.web.HttpServletExecutor;
+import com.slevenc.spf.web.annotation.Act;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,15 +15,11 @@ import javax.servlet.http.HttpServletResponse;
  * Time: 下午1:06
  * To change this template use File | Settings | File Templates.
  */
-@Resource
-public class ActOne implements HttpServletExecutor {
-    @Override
-    public String getAct() {
-        return "one";
+public class ActOne {
+    @Act(name="one")
+    public void e(){
+
     }
 
-    @Override
-    public void execute(HttpServletRequest request, HttpServletResponse resp) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+
 }

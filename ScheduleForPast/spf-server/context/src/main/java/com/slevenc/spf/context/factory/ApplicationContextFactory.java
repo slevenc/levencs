@@ -17,6 +17,7 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -47,7 +48,7 @@ public class ApplicationContextFactory {
 
 
     private Iterable<Module> scanModules() {
-        List<Class> clazz = classFinder.findImplements(AbstractModule.class);
+        Set<Class> clazz = classFinder.findImplements(AbstractModule.class);
         List<Module> result = new LinkedList<Module>();
         for (Class c : clazz) {
             try {

@@ -2,6 +2,7 @@ package com.slevenc.spf.web;
 
 import com.slevenc.spf.context.ApplicationContext;
 import com.slevenc.spf.scaner.ClassFinder;
+import com.slevenc.spf.web.annotation.Act;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,10 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -36,27 +38,28 @@ public class ServletDispatcher extends HttpServlet {
     }
 
 
-    private Map<String, HttpServletExecutor> executors = new HashMap<String, HttpServletExecutor>();
+    private Map<String, Method> executeMethods = new HashMap<String, Method>();
+    private Map<String, Class<? extends HttpServletExecutor>> executorMap = new HashMap<String, Class<? extends HttpServletExecutor>>();
 
     private void loadExecutors() throws Exception {
         ClassFinder cf = ApplicationContext.getClassFinder();
-        List<Class> ClassList = cf.findImplements(HttpServletExecutor.class);
+        Set<Method> methodList = cf.findAnnotationedMethod(Act.class);
         HttpServletExecutor exe = null;
         String act = null;
-        for (Class c : ClassList) {
-            if (Modifier.isAbstract(c.getModifiers()) == false && Modifier.isInterface(c.getModifiers()) == false) {
+        for (Method m : methodList) {
+            if (Modifier.isAbstract(m.getDeclaringClass().getModifiers()) == false && Modifier.isInterface(m.getDeclaringClass().getModifiers()) == false && Modifier.isPublic(m.getModifiers())) {
                 try {
-
-                    exe = (HttpServletExecutor) ApplicationContext.loadClass(c);
-                    act = exe.getAct();
-                    if (executors.containsKey(act) == false) {
-                        executors.put(exe.getAct(), exe);
-                        logger.debug("load executor act:" + act + " class:" + c.getName());
+                    Act aa = (Act) m.getAnnotation(Act.class);
+                    act = aa.name();
+                    if (executeMethods.containsKey(act) == false) {
+                        executeMethods.put(act, m);
+                        executorMap.put(act, aa.executor());
+                        logger.debug("load executor act:" + act + " method:" + m.toGenericString() +" executor:"+aa.executor().getName());
                     } else {
-                        logger.warn("重复定义act :" + act + " class1:" + executors.get(act).getClass().getName() + " class2:" + c.getName());
+                        logger.warn("重复定义act :" + act + " method1:" + executeMethods.get(act).toGenericString() + " method2:" + m.toGenericString());
                     }
                 } catch (Exception ex) {
-                    logger.info("实例化Class失败：" + c.getName(), ex);
+                    logger.info("实例化Class失败：" + m.getName(), ex);
                 }
             }
         }
@@ -65,14 +68,22 @@ public class ServletDispatcher extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String act = req.getParameter("act");
-        HttpServletExecutor executor = executors.get(act);
-        if (executor != null) {
+        Method method = executeMethods.get(act);
+        Class<? extends HttpServletExecutor> executorClass = executorMap.get(act);
+
+        if (method != null) {
             try {
-                executor.execute(req, resp);
+                WebApplicationContextImpl.putRequest(req);
+                WebApplicationContextImpl.putResponse(resp);
+                WebApplicationContextImpl.putAct(act);
+                HttpServletExecutor executor = ApplicationContext.loadClass(executorClass);
+                executor.execute(method);
                 //执行完成自动完成事务
-            } catch (RuntimeException re) {
+            } catch (Exception re) {
                 //异常时回滚
-                throw re;
+                throw new RuntimeException(re);
+            } finally {
+                WebApplicationContextImpl.clearThreadLocal();
             }
         } else {
             resp.sendError(404);
